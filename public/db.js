@@ -12,7 +12,7 @@ request.onsuccess = ({ target }) => {
 
   // check if app is online before reading from db
   if (navigator.onLine) {
-    checkDatabase();
+     checkDatabase();
   }
 };
 
