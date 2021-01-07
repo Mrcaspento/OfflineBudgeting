@@ -1,17 +1,18 @@
-// // Make sure sw are supported
-// if("serviceWorker" in navigator) {
-//     window.addEventListener("load", () => {
-//         navigator.serviceWorker
-//         .register("../sw_cached_pages.js")
-//         .then(reg => console.log('Servcie Worker Registered'))
-//         .catch(err => console.log(`Service Worker : Error: ${err}`));
-//     })
-// }
+// Make sure sw are supported
+if("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+        .register("../sw_cached_pages.js")
+        .then(reg => console.log('Servcie Worker Registered'))
+        .catch(err => console.log(`Service Worker : Error: ${err}`));
+    })
+}
 const cacheName = 'v1';
+const DATA_CACHE = 'data-cache';
 
 const cacheAssets = [
     '/index.html',
-    '../models/transaction.js',
+    '/db.js',
     '/icons/icon-192x192.png',
     '/icons/icon-512x512.png',
     '/index.js',
@@ -27,11 +28,11 @@ self.addEventListener('install', (e) => {
     console.log("Service Worker: Installed");
 
     e.waitUntil(
-        caches
-            .open(cacheName)
+      caches
+        .open(cacheName)
             .then(cache => {
                 console.log('Service Worker: Caching Files');
-                cache.addAll(cacheAssets);
+                return cache.addAll(cacheAssets);
             })
             .then(() => self.skipWaiting())
     );

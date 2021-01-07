@@ -43,5 +43,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="service_worker.js"></script>
+  <script>
+    if("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+        .register("../sw_cached_pages.js")
+        .then(reg => console.log('Servcie Worker Registered'))
+        .catch(err => console.log(`Service Worker : Error: ${err}`));
+    })
+}
+  </script>
 </body>
 </html>
