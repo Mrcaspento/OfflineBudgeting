@@ -7,8 +7,7 @@ const CACHE_ASSETS = [
     '/icons/icon-192x192.png',
     '/icons/icon-512x512.png',
     '/index.js',
-    '/style.css',
-    '/service_worker.js',
+    '/styles.css',
     "https://cdn.jsdelivr.net/npm/chart.js@2.8.0",
     "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
 ];
@@ -22,8 +21,8 @@ self.addEventListener('install', (e) => {
       caches
         .open(CACHE_NAME)
             .then(cache => {
-                console.log('Service Worker: Caching Files');
-                cache.addAll(CACHE_ASSETS);
+                console.log('Service Worker: Caching Files')
+                return cache.addAll(CACHE_ASSETS);
             })
             .then(() => self.skipWaiting())
     );
