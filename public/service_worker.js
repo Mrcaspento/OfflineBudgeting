@@ -1,23 +1,16 @@
 // Make sure sw are supported
-if("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker
-        .register("../sw_cached_pages.js")
-        .then(reg => console.log('Servcie Worker Registered'))
-        .catch(err => console.log(`Service Worker : Error: ${err}`));
-    })
-}
-const cacheName = 'v1';
+
+const CACHE_NAME = 'v1';
 const DATA_CACHE = 'data-cache';
 
-const cacheAssets = [
+const CACHE_ASSETS = [
     '/index.html',
     '/db.js',
     '/icons/icon-192x192.png',
     '/icons/icon-512x512.png',
     '/index.js',
     '/style.css',
-    'service_worker.js',
+    '/service_worker.js',
     "https://cdn.jsdelivr.net/npm/chart.js@2.8.0",
     "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
 ]
@@ -29,10 +22,10 @@ self.addEventListener('install', (e) => {
 
     e.waitUntil(
       caches
-        .open(cacheName)
+        .open(CACHE_NAME)
             .then(cache => {
                 console.log('Service Worker: Caching Files');
-                return cache.addAll(cacheAssets);
+                cache.addAll(CACHE_ASSETS);
             })
             .then(() => self.skipWaiting())
     );
@@ -41,5 +34,17 @@ self.addEventListener('install', (e) => {
 //Call Active Event
 self.addEventListener('activate', (e) => {
     console.log("Service Worker: Activated");
+    //Remove unwanted caches
+    e/waitUntil(
+        caches.keys().then(CACHE_NAMES => {
+            return Promise.all(
+                CACHE_NAMES.map(cache => {
+                    if(cache !== CACHE_NAME) {
+                        console.log('Service Worker: Clearing Old Cache');
+                    }
+                })
+            )
+        })
+    )
 });
 
