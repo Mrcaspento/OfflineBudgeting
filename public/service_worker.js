@@ -1,6 +1,4 @@
-// Make sure sw are supported
-
-const CACHE_NAME = 'v1';
+const CACHE_NAME = 'transactions';
 const DATA_CACHE = 'data-cache';
 
 const CACHE_ASSETS = [
@@ -13,7 +11,7 @@ const CACHE_ASSETS = [
     '/service_worker.js',
     "https://cdn.jsdelivr.net/npm/chart.js@2.8.0",
     "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
-]
+];
 
 
 //Call Install Event
@@ -35,7 +33,7 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
     console.log("Service Worker: Activated");
     //Remove unwanted caches
-    e/waitUntil(
+    e.waitUntil(
         caches.keys().then(CACHE_NAMES => {
             return Promise.all(
                 CACHE_NAMES.map(cache => {
