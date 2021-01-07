@@ -37,7 +37,8 @@ self.addEventListener('activate', (e) => {
             return Promise.all(
                 cacheList.map(cacheKey => {
                     if (cacheKey !== CACHE_NAME && cacheKey !== DATA_CACHE) {
-                        caches.delete(cacheKey);
+                        console.log("Removing cache data", cacheKey);
+                        return caches.delete(cacheKey);
                     }
                 })
             )
@@ -48,7 +49,7 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
-    if (e.request.url.inculdes("/api/")) {
+    if (e.request.url.includes("/api/")) {
         e.respondWith(
            caches.open(DATA_CACHE)
            .then(cache => {
